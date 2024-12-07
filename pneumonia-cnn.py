@@ -11,9 +11,9 @@ spark = SparkSession.builder \
     .getOrCreate()
 
 # Define dataset paths
-train_dir = "/opt/spark/pneumonia/data/train"
-val_dir = "/opt/spark/pneumonia/data/val"
-test_dir = "/opt/spark/pneumonia/data/test"
+train_dir = "/chest-xray/train"
+val_dir = "/chest-xray/val"
+test_dir = "/chest-xray/test"
 
 # CNN model parameters
 input_shape = (150, 150, 1)
@@ -72,10 +72,6 @@ print("Evaluating the model on test data...")
 test_loss, test_accuracy = model.evaluate(test_gen)
 print(f"Test Loss: {test_loss:.4f}")
 print(f"Test Accuracy: {test_accuracy:.4f}")
-
-# Save the model
-model.save("/opt/spark/pneumonia/model/pneumonia_cnn_model")
-print("Model saved successfully.")
 
 # Stop the Spark session
 spark.stop()
