@@ -23,6 +23,19 @@ epochs = 3
 
 # Function to preprocess and load images
 def load_images(data_dir, target_size, color_mode, batch_size, shuffle):
+    """
+    Preprocess and load images from a given directory.
+
+    Args:
+        data_dir (str): Path to the directory containing the dataset.
+        target_size (tuple): Target size to resize images (height, width).
+        color_mode (str): Color mode for image loading ('grayscale' or 'rgb').
+        batch_size (int): Number of images per batch.
+        shuffle (bool): Whether to shuffle the data.
+
+    Returns:
+        tensorflow.keras.preprocessing.image.DirectoryIterator: An iterator for the dataset.
+    """
     datagen = ImageDataGenerator(rescale=1.0 / 255.0)
     return datagen.flow_from_directory(
         data_dir,
@@ -40,6 +53,16 @@ test_gen = load_images(test_dir, input_shape[:2], "grayscale", batch_size, False
 
 # Define the CNN model
 def build_cnn(input_shape, num_classes):
+    """
+    Build a Convolutional Neural Network (CNN) model for image classification.
+
+    Args:
+        input_shape (tuple): Shape of the input images (height, width, channels).
+        num_classes (int): Number of output classes.
+
+    Returns:
+        tensorflow.keras.Model: The compiled CNN model.
+    """
     model = models.Sequential([
         layers.Input(shape=input_shape),
         layers.Conv2D(32, (3, 3), activation="relu"),
@@ -75,4 +98,3 @@ print(f"Test Accuracy: {test_accuracy:.4f}")
 
 # Stop the Spark session
 spark.stop()
-
